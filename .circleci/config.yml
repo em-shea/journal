@@ -15,15 +15,12 @@ jobs:
           name: Install SAM
           command: pip install aws-sam-cli==0.39 --user
 
+      - setup_remote_docker
+
       - run:
           name: Deploy with SAM
           command: |
-            # export PYTHONPATH=/home/xy/caffe-master/python:$PYTHONPATH
-            which pip
-            python -c "import sys; print(sys.path)"
-            python -c "import pip; print(pip.__version__)"
-
-            sam build --user-contaier --debug
+            sam build --use-contaier --debug
             sam deploy --template-file ./template.yaml --stack-name journal --s3-bucket emshea-journal --region us-east-1 --capabilities CAPABILITY_IAM
 
             # if [ "${CIRCLE_BRANCH}" == "master" ]; then
