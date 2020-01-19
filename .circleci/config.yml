@@ -16,15 +16,9 @@ jobs:
           command: pip install aws-sam-cli --user
 
       - run:
-          name: Install Pip Again?
-          command: |
-            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            python3 get-pip.py --user
-            rm get-pip.py
-
-      - run:
           name: Deploy with SAM
           command: |
+            export PYTHONPATH=/home/circleci/.local/bin/:$PYTHONPATH
             which pip
             python -c "import sys; print(sys.path)"
             python -c "import pip"
