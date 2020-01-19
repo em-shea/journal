@@ -1,0 +1,70 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Application description
+# Parameters:
+#   Param1:
+#     Type: String
+
+# Globals:
+#   Api:
+#     # Add AllowMethods with a list of methods for this domain name to call the API in this template
+#     # Cors: !Sub "'${DomainName}'"
+#     Cors:
+#       AllowMethods: "'OPTIONS,POST,GET'"
+#       AllowHeaders: "'*'"
+#       AllowOrigin: "'*'"
+
+Resources:
+  FunctionName:
+    # A function that sends a daily morning journal prompt
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      FunctionName: !Sub FunctionName-${Stage}
+      Handler: FunctionName.lambda_handler
+      Runtime: python3.7
+      CodeUri: ./FunctionName
+      Description: A function that sends a daily morning journal prompt
+      MemorySize: 128
+      Timeout: 120
+      Policies:
+       - AWSLambdaExecute
+      #  - DynamoDBCrudPolicy:
+      #     TableName: !Ref DynamoTableName
+      # Environment:
+      #   Variables:
+          # STAGE: !Ref Stage
+          # TABLE_NAME: !Ref DynamoTableName
+      Events:
+        DailySchedule:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 16 * * ? *)
+
+  # DynamoTableName:
+  #   Type: AWS::DynamoDB::Table
+  #   DeletionPolicy: Retain
+  #   Properties:
+  #     TableName: !Sub DynamoTableName-${Stage}
+  #     AttributeDefinitions:
+  #       - AttributeName: ListId
+  #         AttributeType: S
+  #       - AttributeName: Date
+  #         AttributeType: S
+  #     KeySchema:
+  #       - AttributeName: ListId
+  #         KeyType: HASH
+  #       - AttributeName: Date
+  #         KeyType: RANGE
+  #     BillingMode: PAY_PER_REQUEST
+  #     ProvisionedThroughput:
+  #       ReadCapacityUnits: 0
+  #       WriteCapacityUnits: 0
+
+  # Layer:
+  #   # A Lambda Layer
+  #   Type: 'AWS::Serverless::LayerVersion'
+  #   Properties:
+  #     ContentUri: ./layer
+  #     CompatibleRuntimes:
+  #       - python3.7
+

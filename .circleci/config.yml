@@ -1,0 +1,30 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install awscli
+          command: sudo pip install awscli
+
+      - run:
+          name: Install SAM
+          command: sudo pip install aws-sam-cli
+
+      - run:
+          name: Deploy with SAM
+          command: |
+            sam package --s3-bucket emshea-journal --output-template-file packaged-template.yaml
+            sam deploy --template-file ./packaged-template.yaml --stack-name journal --region us-east-1 --capabilities CAPABILITY_IAM
+
+
+            # if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            #   sam deploy --template-file ./packaged-template.yaml --stack-name basic-stack --region us-east-1 --capabilities CAPABILITY_IAM --parameter-overrides Param1=param1-override Stage=prod
+            # fi
+            # if [ "${CIRCLE_BRANCH}" == "staging" ]; then
+            #   sam deploy --template-file ./packaged-template.yaml --stack-name basic-stack-staging --region us-east-1 --capabilities CAPABILITY_IAM --parameter-overrides Param1=param1-override-staging Stage=staging
+            # fi
