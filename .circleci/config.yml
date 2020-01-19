@@ -20,6 +20,8 @@ jobs:
       - run:
           name: Deploy with SAM
           command: |
+            chmod a+r requirements.txt
+            chmod a+r SendJournal/requirements.txt
             sam build --use-container --debug
             sam deploy --template-file ./template.yaml --stack-name journal --s3-bucket emshea-journal --region us-east-1 --capabilities CAPABILITY_IAM
 
