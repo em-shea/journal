@@ -15,14 +15,15 @@ Description: Application description
 #       AllowOrigin: "'*'"
 
 Resources:
-  FunctionName:
+  SendJournal:
     # A function that sends a daily morning journal prompt
     Type: 'AWS::Serverless::Function'
     Properties:
-      FunctionName: !Sub FunctionName-${Stage}
-      Handler: FunctionName.lambda_handler
+      FunctionName: !Sub SendJournal
+      # FunctionName: !Sub FunctionName-${Stage}
+      Handler: SendJournal.lambda_handler
       Runtime: python3.7
-      CodeUri: ./FunctionName
+      CodeUri: ./SendJournal
       Description: A function that sends a daily morning journal prompt
       MemorySize: 128
       Timeout: 120
