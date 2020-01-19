@@ -9,16 +9,16 @@ jobs:
 
       - run:
           name: Install awscli
-          command: sudo pip install awscli
+          command: pip install awscli
 
       - run:
           name: Install SAM
-          command: sudo pip install aws-sam-cli
+          command: pip install aws-sam-cli
 
       - run:
           name: Deploy with SAM
           command: |
-            sudo sam build
+            sam build
             sam deploy --template-file ./template.yaml --stack-name journal --s3-bucket emshea-journal --region us-east-1 --capabilities CAPABILITY_IAM
 
             # if [ "${CIRCLE_BRANCH}" == "master" ]; then
