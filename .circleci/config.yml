@@ -18,10 +18,10 @@ jobs:
       - run:
           name: Deploy with SAM
           command: |
-            export PYTHONPATH=/usr/local/bin/:$PYTHONPATH
+            # export PYTHONPATH=/home/xy/caffe-master/python:$PYTHONPATH
             which pip
             python -c "import sys; print(sys.path)"
-            python -c "import pip"
+            python -c "import pip; print(pip.__version__)"
 
             sam build
             sam deploy --template-file ./template.yaml --stack-name journal --s3-bucket emshea-journal --region us-east-1 --capabilities CAPABILITY_IAM
