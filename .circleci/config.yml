@@ -18,7 +18,7 @@ jobs:
       - run:
           name: Deploy with SAM
           command: |
-            export PYTHONPATH=/home/circleci/.local/bin/:$PYTHONPATH
+            export PYTHONPATH=/usr/local/bin/:$PYTHONPATH
             which pip
             python -c "import sys; print(sys.path)"
             python -c "import pip"
