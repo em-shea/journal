@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Deploy with SAM
           command: |
-            sam build --use-contaier --debug
+            sam build --use-container --debug
             sam deploy --template-file ./template.yaml --stack-name journal --s3-bucket emshea-journal --region us-east-1 --capabilities CAPABILITY_IAM
 
             # if [ "${CIRCLE_BRANCH}" == "master" ]; then
